@@ -13,7 +13,7 @@ if [ ! -f $FILE ]; then
 
       if [ -n "$IS_SDB_MOUNTED" ]; then
          echo "Sdb is available with UUID $IS_SDB_MOUNTED. Time to mount.."
-         mount -o discard,defaults /dev/sdb /mnt/testdisk/
+         mount -o discard,defaults /dev/sdb /mnt/notebooks/
       else
          rm $FILE
       fi

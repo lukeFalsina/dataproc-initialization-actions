@@ -6,7 +6,7 @@ DIR="${BASH_SOURCE%/*}"
 source "$DIR/../../util/utils.sh"
 
 ROLE=$(/usr/share/google/get_metadata_value attributes/dataproc-role)
-JUPYTER_NOTEBOOK_DIR="/root/notebooks"
+JUPYTER_NOTEBOOK_DIR="/mnt/notebooks"
 JUPYTER_PORT=$(/usr/share/google/get_metadata_value attributes/JUPYTER_PORT || true)
 [[ ! $JUPYTER_PORT =~ ^[0-9]+$ ]] && JUPYTER_PORT=8123
 JUPYTER_AUTH_TOKEN=$(/usr/share/google/get_metadata_value attributes/JUPYTER_AUTH_TOKEN || true)
