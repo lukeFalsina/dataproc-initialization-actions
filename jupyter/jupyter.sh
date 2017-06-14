@@ -61,8 +61,8 @@ if [[ "${ROLE}" == 'Master' ]]; then
     ./dataproc-initialization-actions/jupyter/internal/setup-jupyter-kernel.sh
     ./dataproc-initialization-actions/jupyter/internal/launch-jupyter-kernel.sh
 
-    (crontab -l ; echo "* * * * * /dataproc-initialization-actions/jupyter/automount-persistent-storage.sh  >> /var/log/automount-persistent-storage.log 2>&1") | sort - | uniq - | crontab -
-
+    echo "Schedule the automount script for external persistent disks"
+    echo "* * * * * root bash /dataproc-initialization-actions/jupyter/automount-persistent-storage.sh >> /var/log/automount-persistent-storage.log 2>&1" | tee /etc/cron.d/automount
 fi
 echo "Completed installing Jupyter!"
 
