@@ -30,17 +30,18 @@ if [ -n "${JUPYTER_CONDA_PACKAGES}" ]; then
   conda install $(echo ${JUPYTER_CONDA_PACKAGES} | tr ':' ' ')
 fi
 
-pip install h2o_pysparkling_2.0
+# Sparkling water setup
+SPARKLING_WATER_MAJOR=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/SPARKLING_WATER_MAJOR || true)
+SPARKLING_WATER_MAJOR="${SPARKLING_WATER_MAJOR:-2.0}"
+
+SPARKLING_WATER_MINOR=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/SPARKLING_WATER_MINOR || true)
+SPARKLING_WATER_MINOR="${SPARKLING_WATER_MINOR:-10}"
+
+SPARKLING_WATER_VERSION="${SPARKLING_WATER_MAJOR}.${SPARKLING_WATER_MINOR}"
+
+pip install h2o_pysparkling_2.0==${SPARKLING_WATER_VERSION}
 
 if [[ "${ROLE}" == 'Master' ]]; then
-    # Sparkling water setup
-    SPARKLING_WATER_MAJOR=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/SPARKLING_WATER_MAJOR || true)
-    SPARKLING_WATER_MAJOR="${SPARKLING_WATER_MAJOR:-2.0}"
-
-    SPARKLING_WATER_MINOR=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/SPARKLING_WATER_MINOR || true)
-    SPARKLING_WATER_MINOR="${SPARKLING_WATER_MINOR:-9}"
-
-    SPARKLING_WATER_VERSION="${SPARKLING_WATER_MAJOR}.${SPARKLING_WATER_MINOR}"
     SPARKLING_WATER_URL="http://h2o-release.s3.amazonaws.com/sparkling-water/rel-${SPARKLING_WATER_MAJOR}/${SPARKLING_WATER_MINOR}/sparkling-water-${SPARKLING_WATER_VERSION}.zip"
     HADOOP_VERSION=hdp2.6
 
