@@ -27,7 +27,7 @@ SPARKLING_WATER_MINOR="${SPARKLING_WATER_MINOR:-15}"
 
 SPARKLING_WATER_VERSION="${SPARKLING_WATER_MAJOR}.${SPARKLING_WATER_MINOR}"
 
-pip install h2o_pysparkling_2.0==${SPARKLING_WATER_VERSION}
+pip install h2o_pysparkling_${SPARKLING_WATER_MAJOR}==${SPARKLING_WATER_VERSION}
 
 if [[ "${ROLE}" == 'Master' ]]; then
     SPARKLING_WATER_URL="http://h2o-release.s3.amazonaws.com/sparkling-water/rel-${SPARKLING_WATER_MAJOR}/${SPARKLING_WATER_MINOR}/sparkling-water-${SPARKLING_WATER_VERSION}.zip"
