@@ -7,6 +7,7 @@ INIT_ACTIONS_REPO="${INIT_ACTIONS_REPO:-https://github.com/GoogleCloudPlatform/d
 INIT_ACTIONS_BRANCH=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/INIT_ACTIONS_BRANCH || true)
 INIT_ACTIONS_BRANCH="${INIT_ACTIONS_BRANCH:-master}"
 DATAPROC_BUCKET=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/dataproc-bucket)
+NOTEBOOKS_DISK_OWNER=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/dataproc-owner)
 
 # Colon-separated list of conda channels to add before installing packages
 JUPYTER_CONDA_CHANNELS=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/JUPYTER_CONDA_CHANNELS || true)
@@ -43,7 +44,7 @@ if [[ "${ROLE}" == 'Master' ]]; then
     ./dataproc-initialization-actions/jupyter/internal/launch-jupyter-kernel.sh
 
     echo "Schedule the automount script for external persistent disks"
-    echo "* * * * * root bash /dataproc-initialization-actions/jupyter/automount-persistent-storage.sh >> /var/log/automount-persistent-storage.log 2>&1" | tee /etc/cron.d/automount
+    echo "* * * * * root bash /dataproc-initialization-actions/jupyter/automount-persistent-storage.sh ${NOTEBOOKS_DISK_OWNER} >> /var/log/automount-persistent-storage.log 2>&1" | tee /etc/cron.d/automount
 fi
 echo "Completed installing Jupyter!"
 

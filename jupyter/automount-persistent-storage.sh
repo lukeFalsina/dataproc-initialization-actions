@@ -3,6 +3,7 @@
 # To schedule it:
 # * * * * * /root/automount-persistent-storage.sh  >> /var/log/script_output.log 2>&1
 
+DISK_OWNER=$1
 FILE=/AUTO_MOUNT_EXECUTED
 
 if [ ! -f $FILE ]; then
@@ -14,6 +15,7 @@ if [ ! -f $FILE ]; then
       if [ -n "$IS_SDB_MOUNTED" ]; then
          echo "Sdb is available with UUID $IS_SDB_MOUNTED. Time to mount.."
          mount -o discard,defaults /dev/sdb /mnt/notebooks/
+         chown -R $1:$1 /mnt/notebooks/
       else
          rm $FILE
       fi
