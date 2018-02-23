@@ -32,7 +32,7 @@ cat << EOF
  "language": "python",
  "env": {
     "SPARK_HOME": "/usr/lib/spark/",
-    "PYTHONPATH": "/usr/lib/spark/python/:${PY4J_ZIP}",
+    "PYTHONPATH": "/usr/local/ephemeral_git_tree/pydat:/usr/lib/spark/python/:${PY4J_ZIP}",
     "PYTHONSTARTUP": "/usr/lib/spark/python/pyspark/shell.py",
     "PYSPARK_SUBMIT_ARGS": "--master yarn --deploy-mode client ${PACKAGES_ARG} pyspark-shell"
  }
