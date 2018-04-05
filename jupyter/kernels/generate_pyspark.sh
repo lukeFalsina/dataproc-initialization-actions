@@ -19,10 +19,12 @@ PY4J_ZIP=$(echo ${PY4J_ZIP} | cut -d ' ' -f 1)
 echo "Found PY4J_ZIP: '${PY4J_ZIP}'" >&2
 
 if (( "${SPARK_MAJOR_VERSION}" >= 2 )); then
-  PACKAGES_ARG=''
+  PACKAGES_ARG='--packages graphframes:graphframes:0.5.0-spark2.1-s_2.11,org.apache.spark:spark-streaming-kafka-0-8_2.11:2.2.0,com.booking.spark.ml:featureGathering:latest.release'
 else
   PACKAGES_ARG='--packages com.databricks:spark-csv_2.10:1.3.0'
 fi
+
+REPOSITORIES_ARG='--repositories https://nexus.booking.com/nexus/content/repositories/infra-releases'
 
 cat << EOF
 {
@@ -34,7 +36,7 @@ cat << EOF
     "SPARK_HOME": "/usr/lib/spark/",
     "PYTHONPATH": "/usr/local/ephemeral_git_tree/pydat:/usr/lib/spark/python/:${PY4J_ZIP}",
     "PYTHONSTARTUP": "/usr/lib/spark/python/pyspark/shell.py",
-    "PYSPARK_SUBMIT_ARGS": "--master yarn --deploy-mode client ${PACKAGES_ARG} pyspark-shell"
+    "PYSPARK_SUBMIT_ARGS": "--master yarn --deploy-mode client ${REPOSITORIES_ARG} ${PACKAGES_ARG} pyspark-shell"
  }
 }
 EOF
