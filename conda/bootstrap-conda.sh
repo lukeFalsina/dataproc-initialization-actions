@@ -7,8 +7,8 @@ set -e
 #ROLE=$(/usr/share/google/get_metadata_value attributes/dataproc-role)
 #if [[ "${ROLE}" == 'Master' ]]; then
 
-MINICONDA_VARIANT=$(/usr/share/google/get_metadata_value attributes/MINICONDA_VARIANT || true)
-MINICONDA_VERSION=$(/usr/share/google/get_metadata_value attributes/MINICONDA_VERSION || true)
+#MINICONDA_VARIANT=$(/usr/share/google/get_metadata_value attributes/MINICONDA_VARIANT || true)
+#MINICONDA_VERSION=$(/usr/share/google/get_metadata_value attributes/MINICONDA_VERSION || true)
 MIN_SPARK_VERSION_FOR_LATEST_MINICONDA="2.2.0"
 
 if [[ ! -v CONDA_INSTALL_PATH ]]; then
